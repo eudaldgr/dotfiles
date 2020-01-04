@@ -1,0 +1,83 @@
+#!/bin/sh
+
+gray='#928374'
+black='#282828'
+white='#fbf1c7'
+red='#9d0006'
+green='#79740e'
+yellow='#b57614'
+blue='#076678'
+purple='#8f3f71'
+aqua='#427b58'
+orange='#d65d0e'
+
+workspaces() {
+	cur=`xprop -root _NET_CURRENT_DESKTOP | awk '{print $3}'`
+	tot=`xprop -root _NET_NUMBER_OF_DESKTOPS | awk '{print $3}'`
+
+	for w in `seq 0 $((cur - 1))`; do line="${line}░░"; done
+	line="${line}██"
+	for w in `seq $((cur + 2)) $tot`; do line="${line}░░"; done
+	echo $line
+}
+
+clock() {
+	mtime=$(date +'%H:%M')
+	myear=$(date +'%Y-%m-')
+	mday=$(date +'%d')
+	echo "$mtime %{F${gray}}$myear%{F-}$mday"
+}
+
+battery() {
+	BATPATH=/sys/class/power_supply/BAT1
+	CAPACITY=$BATPATH/capacity
+	STATUS=$BATPATH/status
+	cap=$(cat $CAPACITY)
+	stat=$(cat $STATUS)
+	case $stat in
+		Full)
+			st="="
+			;;
+		Discharging)
+			st="-"
+			;;
+		Charging)
+			st="+"
+			;;
+		Unknown)
+			st="~"
+			;;
+	esac
+
+	echo $st$cap"%"
+}
+
+volume() {
+	snd_cha=$(amixer get Master | grep "Playback channels:" | awk '{if ($4 == "") {printf "%s: Playback", $3} else {printf "%s %s: Playback", $3, $4}}')
+	amixer get Master | grep "$snd_cha" | awk -F'[]%[]' '/%/ {if ($7 == "off") {print "X\n"} else {printf "%d%%\n", $2}}'
+}
+
+network() {
+	wifi=`nmcli dev status | awk 'NR==2{print $3}'`
+	echo $wifi
+}
+
+main() {
+	while :; do
+		buf=" "
+		buf="${buf} %{l} $(workspaces)"
+		buf="${buf} %{c}$(clock)"
+		buf="${buf} %{r}%{F${blue}}NET:%{F-} $(network) %{F${aqua}}BAT:%{F-} $(battery) %{F${purple}}VOL:%{F-} $(volume) %{B-}"
+
+		echo $buf
+		sleep 0.5s
+	done | \
+
+	lemonbar -g 'x30' \
+			 -f 'Hack:size=10' \
+			 -B "${black}" \
+			 -F "${white}" \
+			 -n 'bar'
+}
+
+main
