@@ -58,8 +58,13 @@ volume() {
 }
 
 network() {
-	wifi=`nmcli dev status | awk 'NR==2{print $3}'`
-	echo $wifi
+	network_id=$(iwgetid -r)
+	if [ -n "$network_id" ]
+	then
+		printf "%s\\n" "${network_id}"
+	else
+		printf "%s\\n" "no wlan connected"
+	fi
 }
 
 main() {
@@ -67,14 +72,14 @@ main() {
 		buf=" "
 		buf="${buf} %{l} $(workspaces)"
 		buf="${buf} %{c}$(clock)"
-		buf="${buf} %{r}%{F${blue}}NET:%{F-} $(network) %{F${aqua}}BAT:%{F-} $(battery) %{F${purple}}VOL:%{F-} $(volume) %{B-}"
+		buf="${buf} %{r}%{F${blue}}NET:%{F-} $(network) %{F${aqua}}BAT:%{F-} $(battery) %{F${purple}}VOL:%{F-} $(volume) %{B-}"
 
 		echo $buf
 		sleep 0.5s
 	done | \
 
 	lemonbar -g 'x30' \
-			 -f 'Hack:size=10' \
+			 -f 'Hack:size=10' -f 'Siji:size=12' \
 			 -B "${black}" \
 			 -F "${white}" \
 			 -n 'bar'
