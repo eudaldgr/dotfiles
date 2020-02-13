@@ -4,7 +4,7 @@
 
 [[ -t 0 && $(tty) == /dev/tty1 && ! $DISPLAY ]] && startx
 
-#export TERM=st-256color
+export TERM=xterm-256color
 
 # aliases
 alias ls='ls --color='auto''
@@ -18,6 +18,8 @@ alias please='sudo $(fc -ln -1)'
 
 alias upd='sudo xbps-install -Suv'
 alias ins='sudo xbps-install'
+
+alias vi='vim'
 
 # get current branch in git repo
 function parse_git_branch() {
