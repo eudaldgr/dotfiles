@@ -1,0 +1,17 @@
+"amixer -q set Master toggle"
+	XF86AudioMute
+
+"amixer -q set Master 5%- unmute"
+	XF86AudioLowerVolume
+
+"amixer -q set Master 5%+ unmute"
+	XF86AudioRaiseVolume
+
+"xbacklight -dec 10"
+	XF86MonBrightnessDown
+
+"xbacklight -inc 10"
+	XF86MonBrightnessUp
+
+"scrot ~/lib/img/screenshots/%b%d::%H%M%S.png"
+	Print
