@@ -8,18 +8,15 @@ export TERM=xterm-256color
 
 # aliases
 alias ls='ls --color='auto''
-alias l='ls'
-alias la='ls -lha'
-alias ll='ls -lh'
-alias l.='ls -ad .*'
-alias ll.='ls -lhad .*'
 
-alias please='sudo $(fc -ln -1)'
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
-alias upd='sudo xbps-install -Suv'
-alias ins='sudo xbps-install'
-
-alias vi='vim'
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
 
 # get current branch in git repo
 function parse_git_branch() {
