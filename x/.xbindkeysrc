@@ -13,5 +13,11 @@
 "xbacklight -inc 10"
 	XF86MonBrightnessUp
 
+"sv hup wpa_supplicant"
+	XF86WLAN
+
 "scrot ~/lib/img/screenshots/%b%d::%H%M%S.png"
 	Print
+
+"pkill lemonbar | pkill sleep | bar"
+	Control+Shift + space
