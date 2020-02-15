@@ -5,6 +5,8 @@
 [[ -t 0 && $(tty) == /dev/tty1 && ! $DISPLAY ]] && startx
 
 export TERM=xterm-256color
+export PATH=$PATH:/home/eudaldgr/.local/bin:/home/eudaldgr/bin
+export GPG_TTY=$(tty)
 
 # aliases
 alias ls='ls --color='auto''
