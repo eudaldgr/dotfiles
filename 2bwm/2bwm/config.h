@@ -38,12 +38,12 @@ static const uint8_t borders[] = {4,5,5,4};
  * attribute of the window. You can test this using `xprop WM_NAME`
  */
 #define LOOK_INTO "WM_NAME"
-static const char *ignore_names[] = {"bar", "xclock"};
+static const char *ignore_names[] = {"bar"};
 ///--Menus and Programs---///
 static const char *menucmd[]   = { "dmenu_run", "-h", "30", "-p", "app menu", "-nb", "#282828", NULL };
 static const char *termcmd[]   = { "st", NULL };
 static const char *tmuxcmd[]   = { "st", "-e", "tmux", NULL };
-static const char *filecmd[]   = { "st", "-e", "nnn", NULL };
+static const char *filecmd[]   = { "st", "-e", "fff", NULL };
 static const char *browser[]   = { "firefox", NULL };
 ///--Custom foo---///
 static void halfandcentered(const Arg *arg)
@@ -189,7 +189,7 @@ static key keys[] = {
     {  MOD ,              XK_d,          start,             {.com = menucmd}},
     {  MOD ,              XK_Return,     start,             {.com = termcmd}},
     {  MOD |SHIFT,        XK_Return,     start,             {.com = tmuxcmd}},
-    //{  MOD ,              XK_f,          start,             {.com = filecmd}},
+    //{  MOD |SHIFT,        XK_p,          start,             {.com = filecmd}},
     //{  MOD |ALT,          XK_f,          start,             {.com = browser}},
 	// Exit or restart 2bwm
     {  MOD |CONTROL,      XK_q,          twobwm_exit,       {.i=0}},
