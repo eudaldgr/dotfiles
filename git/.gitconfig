@@ -2,7 +2,7 @@
 	name = Eudald Gubert i Roldan
 	email = hola@eudald.gr
 	signingkey = 0F9608422FDE95F3
-[credential]
-	helper = cache
 [gpg]
-	program = gpg
+	program = gpg2
+[credential]
+	helper = store
