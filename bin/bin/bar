@@ -2,26 +2,25 @@
 pkill lemonbar
 
 # colors
-gray='#928374'
-black='#282828'
+gray='#7c6f64'
+black='#3c3836'
 white='#fbf1c7'
-red='#9d0006'
-green='#79740e'
-yellow='#b57614'
-blue='#076678'
-purple='#8f3f71'
-aqua='#427b58'
+red='#cc241d'
+green='#98971a'
+yellow='#d79921'
+blue='#458588'
+purple='#b16286'
+aqua='#689d6a'
 orange='#d65d0e'
 
 workspaces() {
-	# other workspace indicators ██░░
 	cur=`xprop -root _NET_CURRENT_DESKTOP | awk '{print $3}'`
 	tot=`xprop -root _NET_NUMBER_OF_DESKTOPS | awk '{print $3}'`
 
-	for w in `seq 0 $((cur - 1))`; do line="${line} ○"; done
-	line="${line} ●"
-	for w in `seq $((cur + 2)) $tot`; do line="${line} ○"; done
-	echo $line
+	for w in `seq 0 $((cur - 1))`; do line="${line} %{F${gray}}%{F-}"; done
+	line="${line} %{F${red}}%{F-}"
+	for w in `seq $((cur + 2)) $tot`; do line="${line} %{F${gray}}%{F-}"; done
+	echo " "$line
 }
 
 clock() {
@@ -52,37 +51,77 @@ battery() {
 			;;
 	esac
 
-	echo $st$cap"%"
+	case $cap in
+		0|[1-9]|[1-2][0-5])
+			icon="   "
+			;;
+		2[6-9]|[3-4][0-9])
+			icon="   "
+			;;
+		[5-6][0-9]|7[0-5])
+			icon="   "
+			;;
+		7[6-9]|[8-9][0-9])
+			icon="   "
+			;;
+		100)
+			icon="   "
+			;;
+	esac
+
+	icon="%{F${aqua}}%{F-}%{B${aqua}}${icon}%{B-}%{F${aqua}}%{F-} "
+	echo $icon$st$cap"%"
 }
 
 volume() {
 	snd_cha=$(amixer get Master | grep "Playback channels:" | awk '{if ($4 == "") {printf "%s: Playback", $3} else {printf "%s %s: Playback", $3, $4}}')
-	amixer get Master | grep "$snd_cha" | awk -F'[]%[]' '/%/ {if ($7 == "off") {print "X\n"} else {printf "%d%%\n", $2}}'
+	snd=$(amixer get Master | grep "$snd_cha" | awk -F'[]%[]' '/%/ {if ($7 == "off") {print "X\n"} else {printf "%d\n", $2}}')
+
+	case $snd in
+		X|0)
+			icon="   "
+		;;
+		[1-9]|[1-4][0-9])
+			icon="   "
+		;;
+		[5-9][0-9]|100)
+			icon="   "
+		;;
+	esac
+
+	icon="%{F${purple}}%{F-}%{B${purple}}${icon}%{B-}%{F${purple}}%{F-} "
+	echo $icon$snd"% "
 }
 
 network() {
 	network_id=$(iwgetid -r)
 	if [ -n "$network_id" ]
 	then
-		printf "%s\\n" "${network_id}"
+		icon="   "
+		net="${network_id}"
 	else
-		printf "%s\\n" "no wlan connected"
+		icon="   "
+		net="no wlan"
 	fi
+
+	icon="%{F${blue}}%{F-}%{B${blue}}${icon}%{B-}%{F${blue}}%{F-} "
+	echo $icon$net
 }
 
 main() {
 	while :; do
-		buf=" "
-		buf="${buf} %{l} $(workspaces)"
-		buf="${buf} %{c}$(clock)"
-		buf="${buf} %{r}%{F${blue}}NET:%{F-} $(network) %{F${aqua}}BAT:%{F-} $(battery) %{F${purple}}VOL:%{F-} $(volume) %{B-}"
+		buf=""
+		buf="${buf}%{l}$(workspaces)"
+		buf="${buf}%{c}$(clock)"
+		buf="${buf}%{r}$(network) $(battery) $(volume)"
+		buf="${buf}%{F${black}}%{F-}"
 
 		echo $buf
 		sleep 1s
 	done | \
 
 	lemonbar -g 'x30' \
-			 -f 'Hack:size=10' -f 'Siji:size=12' \
+			 -f 'Hack:size=10' -f 'Font Awesome 5 Free Solid:size=12' \
 			 -B "${black}" \
 			 -F "${white}" \
 			 -n 'bar'
