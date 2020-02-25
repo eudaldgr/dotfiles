@@ -98,10 +98,10 @@ net() {
 	if [ -n "$network_id" ]
 	then
 		icon="   "
-		net="connected"
+		net="wlp1s0"
 	else
 		icon="   "
-		net="no wlan"
+		net="enp2s0"
 	fi
 
 	icon="%{B${blue}}%{F${black}}%{F-}${icon}%{B-}%{F${blue}}%{F-} "
