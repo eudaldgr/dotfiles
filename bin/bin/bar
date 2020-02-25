@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 pkill lemonbar
 
 # colors
@@ -30,7 +30,7 @@ clock() {
 	echo "$mtime %{F${gray}}$myear%{F-}$mday"
 }
 
-battery() {
+bat() {
 	BATPATH=/sys/class/power_supply/BAT1
 	CAPACITY=$BATPATH/capacity
 	STATUS=$BATPATH/status
@@ -69,11 +69,11 @@ battery() {
 			;;
 	esac
 
-	icon="%{F${aqua}}%{F-}%{B${aqua}}${icon}%{B-}%{F${aqua}}%{F-} "
+	icon="%{B${aqua}}%{F${black}}%{F-}${icon}%{B-}%{F${aqua}}%{F-} "
 	echo $icon$st$cap"%"
 }
 
-volume() {
+vol() {
 	snd_cha=$(amixer get Master | grep "Playback channels:" | awk '{if ($4 == "") {printf "%s: Playback", $3} else {printf "%s %s: Playback", $3, $4}}')
 	snd=$(amixer get Master | grep "$snd_cha" | awk -F'[]%[]' '/%/ {if ($7 == "off") {print "X\n"} else {printf "%d\n", $2}}')
 
@@ -89,11 +89,11 @@ volume() {
 		;;
 	esac
 
-	icon="%{F${purple}}%{F-}%{B${purple}}${icon}%{B-}%{F${purple}}%{F-} "
+	icon="%{B${purple}}%{F${black}}%{F-}${icon}%{B-}%{F${purple}}%{F-} "
 	echo $icon$snd"% "
 }
 
-network() {
+net() {
 	network_id=$(iwgetid -r)
 	if [ -n "$network_id" ]
 	then
@@ -104,8 +104,22 @@ network() {
 		net="no wlan"
 	fi
 
-	icon="%{F${blue}}%{F-}%{B${blue}}${icon}%{B-}%{F${blue}}%{F-} "
+	icon="%{B${blue}}%{F${black}}%{F-}${icon}%{B-}%{F${blue}}%{F-} "
 	echo $icon$net
+}
+
+cpu() {
+	cpu=$(cat <(grep 'cpu ' /proc/stat) <(sleep 1s && grep 'cpu ' /proc/stat) | awk -v RS="" '{printf "%.2f\n", ($13-$2+$15-$4)*100/($13-$2+$15-$4+$16-$5)}')
+
+	icon="%{B${yellow}}%{F${black}}%{F-}   %{B-}%{F${yellow}}%{F-} "
+	echo $icon$cpu"% "
+}
+
+mem() {
+	ram=`free | awk '/Mem:/ {print int($3/$2 * 100.0)}'`
+
+	icon="%{B${orange}}%{F${black}}%{F-}   %{B-}%{F${orange}}%{F-} "
+	echo $icon$ram"% "
 }
 
 main() {
@@ -113,12 +127,12 @@ main() {
 		buf=""
 		buf="${buf}%{l}$(workspaces)"
 		buf="${buf}%{c}$(clock)"
-		buf="${buf}%{r}$(network) $(battery) $(volume)"
+		buf="${buf}%{r}$(cpu) $(mem) $(net) $(bat) $(vol)"
 		buf="${buf}%{F${black}}%{F-}"
 
 		echo $buf
-		sleep 1s
-	done | \
+#		sleep 1s
+	done |\
 
 	lemonbar -g 'x30' \
 			 -f 'Hack:size=10' -f 'Font Awesome 5 Free Solid:size=12' \
