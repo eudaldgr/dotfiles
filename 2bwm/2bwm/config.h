@@ -13,7 +13,7 @@ static const float    resize_keep_aspect_ratio= 1.03;
 ///---Offsets---///
 /*0)offsetx          1)offsety
  *2)maxwidth         3)maxheight */
-static const uint8_t offsets[] = {0,30,0,30};
+static const uint8_t offsets[] = {10,50,20,60};
 ///---Colors---///
 /*0)focuscol         1)unfocuscol
  *2)fixedcol         3)unkilcol
@@ -40,11 +40,11 @@ static const uint8_t borders[] = {4,5,5,4};
 #define LOOK_INTO "WM_NAME"
 static const char *ignore_names[] = {"bar"};
 ///--Menus and Programs---///
-static const char *menucmd[]   = { "dmenu_run", "-h", "30", "-p", "app menu", "-nb", "#282828", NULL };
+static const char *menucmd[]   = { "dmenu_run", "-fn", "Hack-12", "-h", "40", "-p", "dmenu", "-nb", "#3c3836", NULL };
 static const char *termcmd[]   = { "st", NULL };
 static const char *tmuxcmd[]   = { "st", "-e", "tmux", NULL };
 static const char *filecmd[]   = { "st", "-e", "fff", NULL };
-static const char *browser[]   = { "firefox", NULL };
+static const char *browser[]   = { "tabbed", "-c", "surf", "-e", NULL };
 ///--Custom foo---///
 static void halfandcentered(const Arg *arg)
 {
@@ -190,7 +190,7 @@ static key keys[] = {
     {  MOD ,              XK_Return,     start,             {.com = termcmd}},
     {  MOD |SHIFT,        XK_Return,     start,             {.com = tmuxcmd}},
     //{  MOD |SHIFT,        XK_p,          start,             {.com = filecmd}},
-    //{  MOD |ALT,          XK_f,          start,             {.com = browser}},
+    {  MOD |ALT,          XK_f,          start,             {.com = browser}},
 	// Exit or restart 2bwm
     {  MOD |CONTROL,      XK_q,          twobwm_exit,       {.i=0}},
     {  MOD |CONTROL,      XK_r,          twobwm_restart,    {.i=0}},
