@@ -11,6 +11,8 @@ alias ins='sudo xbps-install'
 
 alias vi='vim'
 
+alias mkdir='mkdir -p'
+
 alias clav-scan="clamscan --recursive=yes --infected /home"
 alias clav-upd="sudo freshclam"
 alias rkh="sudo rkhunter --update; sudo rkhunter --propupd; sudo rkhunter --check"
