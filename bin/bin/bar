@@ -98,7 +98,7 @@ net() {
 	if [ -n "$network_id" ]
 	then
 		icon="   "
-		net="${network_id}"
+		net="connected"
 	else
 		icon="   "
 		net="no wlan"
@@ -109,7 +109,7 @@ net() {
 }
 
 cpu() {
-	cpu=$(cat <(grep 'cpu ' /proc/stat) <(sleep 1s && grep 'cpu ' /proc/stat) | awk -v RS="" '{printf "%.2f\n", ($13-$2+$15-$4)*100/($13-$2+$15-$4+$16-$5)}')
+	cpu=$(cat <(grep 'cpu ' /proc/stat) <(sleep 0.5s && grep 'cpu ' /proc/stat) | awk -v RS="" '{printf "%.2f\n", ($13-$2+$15-$4)*100/($13-$2+$15-$4+$16-$5)}')
 
 	icon="%{B${yellow}}%{F${black}}%{F-}   %{B-}%{F${yellow}}%{F-} "
 	echo $icon$cpu"% "
@@ -134,7 +134,7 @@ main() {
 #		sleep 1s
 	done |\
 
-	lemonbar -g 'x30' \
+	lemonbar -g '1900x30+10+10' \
 			 -f 'Hack:size=10' -f 'Font Awesome 5 Free Solid:size=12' \
 			 -B "${black}" \
 			 -F "${white}" \
