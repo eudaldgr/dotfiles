@@ -1,2 +1,3 @@
 # dotfiles
-🍚 dotfiles
+
+![Screenshot](screenshot.png)
