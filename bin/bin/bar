@@ -2,6 +2,7 @@
 pkill lemonbar
 
 # colors
+trans='#00000000'
 gray='#7c6f64'
 black='#3c3836'
 white='#fbf1c7'
@@ -20,14 +21,43 @@ workspaces() {
 	for w in `seq 0 $((cur - 1))`; do line="${line} %{F${gray}}%{F-}"; done
 	line="${line} %{F${red}}%{F-}"
 	for w in `seq $((cur + 2)) $tot`; do line="${line} %{F${gray}}%{F-}"; done
-	echo " "$line
+	echo %{B${black}} $line %{B-}
 }
 
 clock() {
 	mtime=$(date +'%H:%M')
 	myear=$(date +'%Y-%m-')
 	mday=$(date +'%d')
-	echo "$mtime %{F${gray}}$myear%{F-}$mday"
+	echo %{B${black}} $mtime %{F${gray}}$myear%{F-}$mday %{B-}
+}
+
+cpu() {
+	cpu=$(cat <(grep 'cpu ' /proc/stat) <(sleep 2s && grep 'cpu ' /proc/stat) | awk -v RS="" '{printf "%.2f\n", ($13-$2+$15-$4)*100/($13-$2+$15-$4+$16-$5)}')
+
+	icon="%{B${yellow}}   %{B-}%{B${black}}%{F${yellow}}%{F-} "
+	echo $icon$cpu"% "
+}
+
+mem() {
+	ram=`free | awk '/Mem:/ {print int($3/$2 * 100.0)}'`
+
+	icon="%{B${orange}}%{F${black}}%{F-}   %{B-}%{B${black}}%{F${orange}}%{F-} "
+	echo $icon$ram"% "
+}
+
+net() {
+	network_id=$(iwgetid -r)
+	if [ -n "$network_id" ]
+	then
+		icon="   "
+		net="wlp1s0"
+	else
+		icon="   "
+		net="enp2s0"
+	fi
+
+	icon="%{B${blue}}%{F${black}}%{F-}${icon}%{B-}%{B${black}}%{F${blue}}%{F-} "
+	echo $icon$net
 }
 
 bat() {
@@ -69,7 +99,7 @@ bat() {
 			;;
 	esac
 
-	icon="%{B${aqua}}%{F${black}}%{F-}${icon}%{B-}%{F${aqua}}%{F-} "
+	icon="%{B${aqua}}%{F${black}}%{F-}${icon}%{B-}%{B${black}}%{F${aqua}}%{F-} "
 	echo $icon$st$cap"%"
 }
 
@@ -89,56 +119,56 @@ vol() {
 		;;
 	esac
 
-	icon="%{B${purple}}%{F${black}}%{F-}${icon}%{B-}%{F${purple}}%{F-} "
-	echo $icon$snd"% "
+	icon="%{B${purple}}%{F${black}}%{F-}${icon}%{B-}%{B${black}}%{F${purple}}%{F-} "
+	printf "%-99.99s\n" "$icon$snd% "
+#	echo $icon$snd"% "
 }
 
-net() {
-	network_id=$(iwgetid -r)
-	if [ -n "$network_id" ]
-	then
-		icon="   "
-		net="wlp1s0"
-	else
-		icon="   "
-		net="enp2s0"
-	fi
+left() {
+	while :; do
+		buf="$(workspaces)"
 
-	icon="%{B${blue}}%{F${black}}%{F-}${icon}%{B-}%{F${blue}}%{F-} "
-	echo $icon$net
+		echo $buf
+		sleep 0.9s
+	done |\
+
+	lemonbar -g '248x30+10+10' \
+			 -f 'Hack:size=10' -f 'Font Awesome 5 Free Solid:size=12' \
+			 -B "${trans}" \
+			 -F "${white}"
 }
 
-cpu() {
-	cpu=$(cat <(grep 'cpu ' /proc/stat) <(sleep 0.5s && grep 'cpu ' /proc/stat) | awk -v RS="" '{printf "%.2f\n", ($13-$2+$15-$4)*100/($13-$2+$15-$4+$16-$5)}')
+center() {
+	while :; do
+		buf="$(clock)"
 
-	icon="%{B${yellow}}%{F${black}}%{F-}   %{B-}%{F${yellow}}%{F-} "
-	echo $icon$cpu"% "
+		echo $buf
+		sleep 2s
+	done |\
+
+	lemonbar -g '144x30+888+10' \
+			 -f 'Hack:size=10' -f 'Font Awesome 5 Free Solid:size=12' \
+			 -B "${trans}" \
+			 -F "${white}"
 }
 
-mem() {
-	ram=`free | awk '/Mem:/ {print int($3/$2 * 100.0)}'`
+right() {
+	while :; do
+		buf="%{B${black}}$(cpu) $(mem) $(net) $(bat) $(vol)%{B-}"
 
-	icon="%{B${orange}}%{F${black}}%{F-}   %{B-}%{F${orange}}%{F-} "
-	echo $icon$ram"% "
+		echo $buf
+	done |\
+
+	lemonbar -g '502x30+1408+10' \
+			 -f 'Hack:size=10' -f 'Font Awesome 5 Free Solid:size=12' \
+			 -B "${trans}" \
+			 -F "${white}"
 }
 
 main() {
-	while :; do
-		buf=""
-		buf="${buf}%{l}$(workspaces)"
-		buf="${buf}%{c}$(clock)"
-		buf="${buf}%{r}$(cpu) $(mem) $(net) $(bat) $(vol)"
-		buf="${buf}%{F${black}}%{F-}"
-
-		echo $buf
-#		sleep 1s
-	done |\
-
-	lemonbar -g '1900x30+10+10' \
-			 -f 'Hack:size=10' -f 'Font Awesome 5 Free Solid:size=12' \
-			 -B "${black}" \
-			 -F "${white}" \
-			 -n 'bar'
+	left &
+	center &
+	right
 }
 
 main
