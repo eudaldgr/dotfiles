@@ -2,7 +2,6 @@
 pkill lemonbar
 
 # colors
-trans='#00000000'
 gray='#7c6f64'
 black='#3c3836'
 white='#fbf1c7'
@@ -35,14 +34,18 @@ cpu() {
 	cpu=$(cat <(grep 'cpu ' /proc/stat) <(sleep 2s && grep 'cpu ' /proc/stat) | awk -v RS="" '{printf "%.2f\n", ($13-$2+$15-$4)*100/($13-$2+$15-$4+$16-$5)}')
 
 	icon="%{B${yellow}}   %{B-}%{B${black}}%{F${yellow}}%{F-} "
-	echo $icon$cpu"% "
+	echo $icon
+	printf '%06.2f' $cpu
+	echo "% "
 }
 
 mem() {
 	ram=`free | awk '/Mem:/ {print int($3/$2 * 100.0)}'`
 
 	icon="%{B${orange}}%{F${black}}%{F-}   %{B-}%{B${black}}%{F${orange}}%{F-} "
-	echo $icon$ram"% "
+	echo $icon
+	printf '%03d' $ram
+	echo "% "
 }
 
 net() {
@@ -81,47 +84,18 @@ bat() {
 			;;
 	esac
 
-	case $cap in
-		0|[1-9]|[1-2][0-5])
-			icon="   "
-			;;
-		2[6-9]|[3-4][0-9])
-			icon="   "
-			;;
-		[5-6][0-9]|7[0-5])
-			icon="   "
-			;;
-		7[6-9]|[8-9][0-9])
-			icon="   "
-			;;
-		100)
-			icon="   "
-			;;
-	esac
-
-	icon="%{B${aqua}}%{F${black}}%{F-}${icon}%{B-}%{B${black}}%{F${aqua}}%{F-} "
-	echo $icon$st$cap"%"
+	icon="%{B${aqua}}%{F${black}}%{F-}   %{B-}%{B${black}}%{F${aqua}}%{F-} "
+	echo $icon$st
+	printf '%03d' $cap
+	echo "%"
 }
 
 vol() {
 	snd_cha=$(amixer get Master | grep "Playback channels:" | awk '{if ($4 == "") {printf "%s: Playback", $3} else {printf "%s %s: Playback", $3, $4}}')
-	snd=$(amixer get Master | grep "$snd_cha" | awk -F'[]%[]' '/%/ {if ($7 == "off") {print "X\n"} else {printf "%d\n", $2}}')
+	snd=$(amixer get Master | grep "$snd_cha" | awk -F'[]%[]' '/%/ {if ($7 == "off") {print "XXX\n"} else {printf "%03d\n", $2}}')
 
-	case $snd in
-		X|0)
-			icon="   "
-		;;
-		[1-9]|[1-4][0-9])
-			icon="   "
-		;;
-		[5-9][0-9]|100)
-			icon="   "
-		;;
-	esac
-
-	icon="%{B${purple}}%{F${black}}%{F-}${icon}%{B-}%{B${black}}%{F${purple}}%{F-} "
-	printf "%-99.99s\n" "$icon$snd% "
-#	echo $icon$snd"% "
+	icon="%{B${purple}}%{F${black}}%{F-}   %{B-}%{B${black}}%{F${purple}}%{F-} "
+	echo $icon$snd"% "
 }
 
 left() {
@@ -129,12 +103,12 @@ left() {
 		buf="$(workspaces)"
 
 		echo $buf
-		sleep 0.9s
+		sleep 0.7s
 	done |\
 
 	lemonbar -g '248x30+10+10' \
 			 -f 'Hack:size=10' -f 'Font Awesome 5 Free Solid:size=12' \
-			 -B "${trans}" \
+			 -B "${black}" \
 			 -F "${white}"
 }
 
@@ -147,8 +121,8 @@ center() {
 	done |\
 
 	lemonbar -g '144x30+888+10' \
-			 -f 'Hack:size=10' -f 'Font Awesome 5 Free Solid:size=12' \
-			 -B "${trans}" \
+			 -f 'Hack:size=10' \
+			 -B "${black}" \
 			 -F "${white}"
 }
 
@@ -159,9 +133,9 @@ right() {
 		echo $buf
 	done |\
 
-	lemonbar -g '502x30+1408+10' \
+	lemonbar -g '538x30+1372+10' \
 			 -f 'Hack:size=10' -f 'Font Awesome 5 Free Solid:size=12' \
-			 -B "${trans}" \
+			 -B "${black}" \
 			 -F "${white}"
 }
 
