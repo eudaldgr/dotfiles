@@ -63,33 +63,6 @@ net() {
 	echo $icon$net
 }
 
-bat() {
-	BATPATH=/sys/class/power_supply/BAT1
-	CAPACITY=$BATPATH/capacity
-	STATUS=$BATPATH/status
-	cap=$(cat $CAPACITY)
-	stat=$(cat $STATUS)
-	case $stat in
-		Full)
-			st="="
-			;;
-		Discharging)
-			st="-"
-			;;
-		Charging)
-			st="+"
-			;;
-		Unknown)
-			st="~"
-			;;
-	esac
-
-	icon="%{B${aqua}}%{F${black}}%{F-}   %{B-}%{B${black}}%{F${aqua}}%{F-} "
-	echo $icon$st
-	printf '%03d' $cap
-	echo "%"
-}
-
 vol() {
 	snd_cha=$(amixer get Master | grep "Playback channels:" | awk '{if ($4 == "") {printf "%s: Playback", $3} else {printf "%s %s: Playback", $3, $4}}')
 	snd=$(amixer get Master | grep "$snd_cha" | awk -F'[]%[]' '/%/ {if ($7 == "off") {print "XXX\n"} else {printf "%03d\n", $2}}')
@@ -128,7 +101,7 @@ center() {
 
 right() {
 	while :; do
-		buf="%{B${black}}$(cpu) $(mem) $(net) $(bat) $(vol)%{B-}"
+		buf="%{B${black}}$(cpu) $(mem) $(net) $(vol)%{B-}"
 
 		echo $buf
 	done |\
