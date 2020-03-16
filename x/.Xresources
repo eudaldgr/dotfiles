@@ -1,5 +1,0 @@
-! font things
-*.font: xft:Hack:style=Regular:size=10
-*.boldFont: xft:Hack:style=Regular:size=10
-*.italicFont: xft:Hack:style=Regular:size=10
-*.boldItalicFont: xft:Hack:style=Regular:size=10
