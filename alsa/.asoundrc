@@ -1,0 +1,3 @@
+defaults.pcm.!card Generic
+defaults.pcm.!device 0
+defaults.pcm.!ctl Generic
