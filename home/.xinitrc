@@ -2,7 +2,7 @@
 
 xrdb -merge ~/.Xresources &
 
-picom -b --config ~/.picom.conf &
+picom -b --config ~/.config/picom.conf &
 
 xbacklight -set 50 &
 amixer -q set Master 40% &
