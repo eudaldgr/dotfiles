@@ -1,13 +1,13 @@
 #!/bin/sh
 
-xrdb -merge ~/.Xresources &
+xrdb -merge ~/.Xresources
 
-picom -b --config ~/.config/picom.conf &
+picom -b --config ~/.config/picom.conf
 
-xbacklight -set 50 &
-amixer -c 1 -q set Master 40% &
+xbacklight -set 50
+amixer -c 1 -q set Master 40%
 
-hsetroot -fill ~/lib/img/wall/wallpaper.jpg &
+hsetroot -fill ~/lib/img/wall/wallpaper.jpg
 
 ~/bin/bar &
 exec 2bwm
