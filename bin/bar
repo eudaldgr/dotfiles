@@ -83,8 +83,8 @@ left() {
 		sleep 0.7s
 	done |\
 
-	lemonbar -g '227x30+10+10' \
-		 -f 'Font Awesome 5 Free Solid:size=12' \
+	lemonbar -g '248x30+10+10' \
+		 -f 'Hack:size=10' -f 'Font Awesome 5 Free Solid:size=12' \
 		 -B "${color15}"
 }
 
