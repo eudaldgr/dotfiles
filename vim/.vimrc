@@ -54,6 +54,7 @@ set noshowmode
 set termguicolors
 set background=light
 set synmaxcol=512
+set number
 set relativenumber
 set nowrap
 set cursorline
