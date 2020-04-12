@@ -52,7 +52,7 @@ set hidden
 set showmatch
 set noshowmode
 set termguicolors
-set background=light
+set background=dark
 set synmaxcol=512
 set number
 set relativenumber
