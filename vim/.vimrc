@@ -15,7 +15,6 @@ Plug 'itchyny/lightline.vim'
 Plug 'shinchu/lightline-gruvbox.vim'
   let g:lightline = {}
   let g:lightline.colorscheme = 'gruvbox'
-
 Plug 'lervag/vimtex'
 Plug 'ledger/vim-ledger'
 Plug 'matze/vim-move'
