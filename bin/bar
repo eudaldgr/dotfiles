@@ -4,7 +4,6 @@ pkill lemonbar
 # colors
 foreground=$(xrdb -query | grep "*foreground" | cut -f 2)
 background=$(xrdb -query | grep "*background" | cut -f 2)
-cursorColor=$(xrdb -query | grep "*cursorColor" | cut -f 2)
 
 color0=$(xrdb -query | grep "*color0"  | cut -f 2)
 color1=$(xrdb -query | grep "*color1"  | cut -f 2)
@@ -27,9 +26,9 @@ workspaces() {
 	cur=`xprop -root _NET_CURRENT_DESKTOP | awk '{print $3}'`
 	tot=`xprop -root _NET_NUMBER_OF_DESKTOPS | awk '{print $3}'`
 
-	for w in `seq 0 $((cur - 1))`; do line="${line} %{F${color7}}%{F-}"; done
+	for w in `seq 0 $((cur - 1))`; do line="${line} %{F${color8}}%{F-}"; done
 	line="${line} %{F${color1}}%{F-}"
-	for w in `seq $((cur + 2)) $tot`; do line="${line} %{F${color7}}%{F-}"; done
+	for w in `seq $((cur + 2)) $tot`; do line="${line} %{F${color8}}%{F-}"; done
 	echo $line
 }
 
@@ -37,13 +36,13 @@ clock() {
 	mtime=$(date +'%H:%M')
 	myear=$(date +'%Y-%m-')
 	mday=$(date +'%d')
-	echo $mtime %{F${color7}}$myear%{F-}$mday
+	echo $mtime %{F${color8}}$myear%{F-}$mday
 }
 
 cpu() {
 	cpu=$(cat <(grep 'cpu ' /proc/stat) <(sleep 2s && grep 'cpu ' /proc/stat) | awk -v RS="" '{printf "%.2f\n", ($13-$2+$15-$4)*100/($13-$2+$15-$4+$16-$5)}')
 
-	icon="%{B${color3}}   %{B-}%{B${color15}}%{F${color3}}%{F-} "
+	icon="%{B${color3}}   %{B-}%{B${color0}}%{F${color3}}%{F-} "
 	echo $icon
 	printf '%06.2f' $cpu
 	echo "% "
@@ -52,7 +51,7 @@ cpu() {
 mem() {
 	ram=`free | awk '/Mem:/ {print int($3/$2 * 100.0)}'`
 
-	icon="%{B${color6}}%{F${color15}}%{F-}   %{B-}%{B${color15}}%{F${color6}}%{F-} "
+	icon="%{B${color6}}%{F${color0}}%{F-}   %{B-}%{B${color0}}%{F${color6}}%{F-} "
 	echo $icon
 	printf '%03d' $ram
 	echo "% "
@@ -65,7 +64,7 @@ net() {
 		net=$(hostname -i)
 	fi
 
-	icon="%{B${color4}}%{F${color15}}%{F-}  %{B-}%{B${color15}}%{F${color4}}%{F-} "
+	icon="%{B${color4}}%{F${color0}}%{F-}  %{B-}%{B${color0}}%{F${color4}}%{F-} "
 	echo $icon$net
 }
 
@@ -73,7 +72,7 @@ vol() {
 	snd_cha=$(amixer -c 1 get Master | grep "Playback channels:" | awk '{if ($4 == "") {printf "%s: Playback", $3} else {printf "%s %s: Playback", $3, $4}}')
 	snd=$(amixer -c 1 get Master | grep "$snd_cha" | awk -F'[]%[]' '/%/ {if ($7 == "off") {print "XXX\n"} else {printf "%03d\n", $2}}')
 
-	icon="%{B${color5}}%{F${color15}}%{F-}   %{B-}%{B${color15}}%{F${color5}}%{F-} "
+	icon="%{B${color5}}%{F${color0}}%{F-}   %{B-}%{B${color0}}%{F${color5}}%{F-} "
 	echo $icon$snd"% "
 }
 
@@ -85,7 +84,7 @@ left() {
 
 	lemonbar -g '248x30+10+10' \
 		 -f 'Hack:size=10' -f 'Font Awesome 5 Free Solid:size=12' \
-		 -B "${color15}"
+		 -B "${background}"
 }
 
 center() {
@@ -96,8 +95,8 @@ center() {
 
 	lemonbar -g '144x30+888+10' \
 		 -f 'Hack:size=10' \
-		 -B "${color15}" \
-		 -F "${color0}"
+		 -B "${background}" \
+		 -F "${foreground}"
 }
 
 right() {
@@ -107,8 +106,8 @@ right() {
 
 	lemonbar -g '467x30+1443+10' \
 		 -f 'Hack:size=10' -f 'Font Awesome 5 Free Solid:size=12' \
-		 -B "${color15}" \
-		 -F "${color0}"
+		 -B "${background}" \
+		 -F "${foreground}"
 }
 
 left &
