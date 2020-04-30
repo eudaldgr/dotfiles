@@ -65,7 +65,7 @@ set backupdir=~/.vim/backup/
 set noswapfile
 set backspace=indent,eol,start
 set shiftwidth=4
-set noexpandtab
+set expandtab
 set tabstop=4
 set softtabstop=4
 set autoindent

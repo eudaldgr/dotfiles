@@ -4,10 +4,10 @@ xrdb -merge ~/.Xresources
 
 picom -b --config ~/.config/picom.conf
 
-xbacklight -set 70
-amixer -c 1 -q set Master 40%
+amixer -c 1 -q set Master 60%
 
 hsetroot -fill ~/lib/img/wall/wallpaper.jpg
 
+~/bin/clock &
 ~/bin/bar &
 exec 2bwm
