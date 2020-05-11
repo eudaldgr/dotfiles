@@ -6,4 +6,4 @@ export CFLAGS='-march=native -pipe -O3 -fno-math-errno'
 export CXXFLAGS="$CFLAGS"
 export MAKEFLAGS='-j6'
 
-export KISS_PATH=/home/eudaldgr/repos/eudald-kiss:/home/eudaldgr/repos/kiss-kernel:/home/eudaldgr/repos/kiss-garbage:/home/eudaldgr/repos/kiss-java:/home/eudaldgr/repos/kiss-games:$KISS_PATH:
+export KISS_PATH=/home/eudaldgr/repos/eudald-kiss:/home/eudaldgr/repos/kiss-kernel:/home/eudaldgr/repos/kiss-garbage:/home/eudaldgr/repos/kiss-java/java:/home/eudaldgr/repos/kiss-games:/home/eudaldgr/repos/kiss-flatpak/flatpak:$KISS_PATH:
