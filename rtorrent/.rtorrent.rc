@@ -1,0 +1,5 @@
+throttle.global_down.max_rate.set_kb = 0
+throttle.global_up.max_rate.set_kb = 0
+
+directory.default.set = /home/eudaldgr/torrent/
+session.path.set = /home/eudaldgr/torrent/.session
