@@ -3,3 +3,10 @@ throttle.global_up.max_rate.set_kb = 0
 
 directory.default.set = /home/eudaldgr/torrent/
 session.path.set = /home/eudaldgr/torrent/.session
+
+dht = auto
+dht_port = 6881
+port_range = 49164-49164
+port_random = no
+check_hash = yes
+encryption = allow_incoming,try_outgoing,enable_retry,require,require_RC4
