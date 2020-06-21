@@ -1,6 +1,7 @@
 #!/bin/sh
 
 export PASH_KEYID=hola@eudald.gr
+export PASH_DIR=~/.local/share/pash
 
 export CFLAGS='-march=native -pipe -O3 -fno-math-errno'
 export CXXFLAGS="$CFLAGS"
@@ -9,7 +10,7 @@ export MAKEFLAGS='-j4'
 export KISS_PATH=/home/eudaldgr/repos/community/community:$KISS_PATH:
 export KISS_PATH=/home/eudaldgr/repos/kiss-flatpak/flatpak:$KISS_PATH:
 export KISS_PATH=/home/eudaldgr/repos/kiss-games:$KISS_PATH:
-export KISS_PATH=/home/eudaldgr/repos/kiss-java/java:$KISS_PATH:
-export KISS_PATH=/home/eudaldgr/repos/kiss-garbage:$KISS_PATH:
-export KISS_PATH=/home/eudaldgr/repos/kiss-kernel:$KISS_PATH:
+export KISS_PATH=/home/eudaldgr/repos/kiss-repo/java:$KISS_PATH:
+export KISS_PATH=/home/eudaldgr/repos/kiss-repo/garbage:$KISS_PATH:
+export KISS_PATH=/home/eudaldgr/repos/kiss-repo/kernel:$KISS_PATH:
 export KISS_PATH=/home/eudaldgr/repos/eudald-kiss:$KISS_PATH:
