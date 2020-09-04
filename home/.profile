@@ -12,8 +12,7 @@ export MAKEFLAGS='-j12'
 
 export KISS_SU=doas
 export KISS_HOOK=$HOME/.local/bin/kiss-hook
-export KISS_PATH=''
-KISS_PATH=$KISS_PATH:$HOME/repos/eudald-kiss
+export KISS_PATH=$HOME/repos/eudald-kiss
 KISS_PATH=$KISS_PATH:$HOME/repos/repo/core
 KISS_PATH=$KISS_PATH:$HOME/repos/repo/extra
 KISS_PATH=$KISS_PATH:$HOME/repos/repo/xorg
