@@ -9,7 +9,6 @@ install:
 	mkdir -p ${DESTDIR}${HOME}/.ncmpcpp
 	cp -rp .git LICENSE Makefile README Screenshot.png bin boot config etc git\
 		home ncmpcpp rtorrent vim ${DESTDIR}${HOME}/dotfiles
-	install -D -o root -g root boot/.keep -t ${DESTDIR}${HOME}/dotfiles/boot
 	ln -sf ${HOME}/dotfiles/bin                   ${DESTDIR}${HOME}/.local/bin
 	ln -sf ${HOME}/dotfiles/config/mpd/mpd.conf   ${DESTDIR}${HOME}/.config/mpd/mpd.conf
 	ln -sf ${HOME}/dotfiles/config/sx/sxrc        ${DESTDIR}${HOME}/.config/sx/sxrc
