@@ -4,7 +4,7 @@ let g:is_bash = 1
 
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-	\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
@@ -12,16 +12,46 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'morhetz/gruvbox'
 Plug 'itchyny/lightline.vim'
+  let g:lightline = {
+    \ 'colorscheme': 'gruvbox',
+    \ 'active': {
+    \   'left': [ [ 'mode', 'paste' ],
+    \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
+    \   'right': [ [ 'linter_errors', 'linter_warnings' ],
+    \              [ 'lineinfo' ],
+    \              [ 'percent' ],
+    \              [ 'fileformat', 'fileencoding', 'filetype', 'charvaluehex' ] ]
+    \ },
+    \ 'component': {
+    \   'charvaluehex': '0x%B'
+    \ },
+    \ 'component_function': {
+    \   'gitbranch': 'FugitiveHead'
+    \ },
+    \ 'component_expand': {
+    \   'linter_warnings': 'lightline#ale#warnings',
+    \   'linter_errors': 'lightline#ale#errors',
+    \ },
+    \ 'component_type': {
+    \   'linter_warnings': 'warning',
+    \   'linter_errors': 'error',
+    \ },
+    \ }
+  let g:lightline#ale#indicator_warnings = "\uf071"
+  let g:lightline#ale#indicator_errors = "\uf05e"
 Plug 'shinchu/lightline-gruvbox.vim'
-  let g:lightline = {}
-  let g:lightline.colorscheme = 'gruvbox'
+Plug 'maximbaz/lightline-ale'
 Plug 'lervag/vimtex'
 Plug 'ledger/vim-ledger'
+Plug 'arrufat/vala.vim'
 Plug 'matze/vim-move'
 Plug 'godlygeek/tabular'
 Plug 'tpope/vim-surround'
+Plug 'chun-yang/auto-pairs'
 Plug 'joom/vim-commentary'
-Plug 'xero/nerdtree'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'chrisbra/colorizer'
 Plug 'chrisbra/unicode.vim'
@@ -33,7 +63,7 @@ Plug 'majutsushi/tagbar', { 'on': 'Tagbar' }
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'junegunn/limelight.vim', { 'on': 'Goyo' }
 Plug 'maxboisvert/vim-simple-complete'
-Plug 'shougo/deoplete.nvim', has('nvim') ? {} : { 'do': [ ':UpdateRemotePlugins', ':set runtimepath+=~/.vim/plugged/deoplete.nvim/' ]}
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'roxma/vim-tmux-clipboard'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'melonmanchan/vim-tmux-resizer'
@@ -81,6 +111,11 @@ set foldlevel=99
 set foldminlines=99
 set foldlevelstart=99
 set listchars=tab:·\ ,trail:·,extends:»,precedes:«,nbsp:_
+
+" NERDTree things
+autocmd VimEnter * NERDTree
+autocmd VimEnter * wincmd p
+autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 if !isdirectory(expand(&backupdir))
     call mkdir(expand(&backupdir), 'p')
