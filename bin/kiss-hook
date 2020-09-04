@@ -1,0 +1,66 @@
+#!/bin/sh -e
+
+case $TYPE in
+    pre-extract)
+        case $PKG in
+            # Run everything on disk for these memory hungry packages.
+            firefox|firefox-esr|rust|llvm|clang)
+                mak_dir=$KISS_TMPDIR/build-$pid
+                pkg_dir=$KISS_TMPDIR/pkg-$pid
+            ;;
+
+            *)
+                log "$PKG" "Activating tmpfs"
+
+                mak_dir=/tmp/build-$pid
+                pkg_dir=/tmp/pkg-$pid
+            ;;
+        esac
+
+        mkdir -p "$mak_dir" "$pkg_dir/$PKG/var/db/kiss/installed"
+    ;;
+
+    pre-build)
+        IFS=. read -r _start _ < /proc/uptime
+    ;;
+
+    post-build)
+        # Ensure that '$DEST' is set.
+        : "${DEST:?DEST is unset}"
+                                           
+        rm -rf "$DEST/usr/share/gettext" \
+               "$DEST/usr/share/polkit-1" \
+               "$DEST/usr/share/locale" \
+               "$DEST/usr/share/info" \
+               "$DEST/usr/lib/charset.alias"
+
+        IFS=. read -r _end _ < /proc/uptime
+
+        (
+            _s=$((_end - _start))
+            _h=$((_s / 60 / 60 % 24))
+            _m=$((_s / 60 % 60))
+
+            [ "$_h" = 0 ] || _u="${_u}${_h}h "
+            [ "$_m" = 0 ] || _u="${_u}${_m}m "
+
+            log "$PKG" "Build finished in ${_u:-${_s}s}"
+        )
+    ;;
+
+    pre-install)
+        case $PKG in
+            linux)
+                mount /dev/sdb2 /boot/efi
+                ;;
+        esac
+    ;;
+
+    post-install)
+        case $PKG in
+            linux)
+                umount /boot/efi
+            ;;
+        esac
+     ;;
+esac
