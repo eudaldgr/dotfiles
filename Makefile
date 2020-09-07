@@ -11,6 +11,10 @@ mkdirs:
 	mkdir -p ${DESTDIR}${HOME}/.config/sx
 	mkdir -p ${DESTDIR}${HOME}/.ncmpcpp
 
+mkcopy:
+	cp -r .git LICENSE Makefile README Screenshot.png bin boot config etc git\
+		home ncmpcpp rtorrent vim ${DESTDIR}${HOME}/dotfiles
+
 mklink:
 	ln -sf ${HOME}/dotfiles/bin                   ${DESTDIR}${HOME}/.local/bin
 	ln -sf ${HOME}/dotfiles/config/mpd/mpd.conf   ${DESTDIR}${HOME}/.config/mpd/mpd.conf
@@ -21,8 +25,6 @@ mklink:
 	ln -sf ${HOME}/dotfiles/rtorrent/.rtorrent.rc ${DESTDIR}${HOME}/.rtorrent.rc
 	ln -sf ${HOME}/dotfiles/vim/.vimrc            ${DESTDIR}${HOME}/.vimrc
 
-install: mkdirs mklink
-	cp -rp .git LICENSE Makefile README Screenshot.png bin boot config etc git\
-		home ncmpcpp rtorrent vim ${DESTDIR}${HOME}/dotfiles
+install: mkdirs mkcopy mklink
 
 .PHONY: install
