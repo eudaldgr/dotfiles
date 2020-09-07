@@ -12,8 +12,8 @@ mkdirs:
 	mkdir -p ${DESTDIR}${HOME}/.ncmpcpp
 
 mkcopy:
-	cp -r .git LICENSE Makefile README Screenshot.png bin boot config etc git\
-		home ncmpcpp rtorrent vim ${DESTDIR}${HOME}/dotfiles
+	git clone -b desktop https://github.com/eudaldgr/dotfiles\
+		${DESTDIR}${HOME}/dotfiles
 
 mklink:
 	ln -sf ${HOME}/dotfiles/bin                   ${DESTDIR}${HOME}/.local/bin
