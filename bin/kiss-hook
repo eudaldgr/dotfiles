@@ -3,8 +3,7 @@
 case $TYPE in
     pre-extract)
         case $PKG in
-            # Run everything on disk for these memory hungry packages.
-            firefox|firefox-esr|rust|llvm|clang)
+            firefox|firefox-esr|rust|llvm|clang|gcc)
                 mak_dir=$KISS_TMPDIR/build-$pid
                 pkg_dir=$KISS_TMPDIR/pkg-$pid
             ;;
@@ -25,15 +24,6 @@ case $TYPE in
     ;;
 
     post-build)
-        # Ensure that '$DEST' is set.
-        : "${DEST:?DEST is unset}"
-                                           
-        rm -rf "$DEST/usr/share/gettext" \
-               "$DEST/usr/share/polkit-1" \
-               "$DEST/usr/share/locale" \
-               "$DEST/usr/share/info" \
-               "$DEST/usr/lib/charset.alias"
-
         IFS=. read -r _end _ < /proc/uptime
 
         (
@@ -46,6 +36,27 @@ case $TYPE in
 
             log "$PKG" "Build finished in ${_u:-${_s}s}"
         )
+        # Ensure that '$DEST' is set.
+        : "${DEST:?DEST is unset}"
+
+        case $PKG in
+            libudev-zero) # install our helper script
+                cc contrib/helper.c -o helper
+                install -Dm755 helper "$DEST/usr/bin/helper"
+            ;;
+            *)
+                rm -rf "$DEST/etc/bash_completions.d"
+                rm -rf "$DEST/usr/lib/charset.alias"
+                rm -rf "$DEST/usr/share/polkit-1"
+                rm -rf "$DEST/usr/share/gettext"
+                rm -rf "$DEST/usr/share/gtk-doc"
+                rm -rf "$DEST/usr/share/locale"
+                rm -rf "$DEST/usr/share/info"
+                rm -rf "$DEST/usr/share/doc"
+                rm -rf "$DEST/usr/share/man"
+                rm -rf "$DEST/usr/share/zsh"
+            ;;
+        esac
     ;;
 
     pre-install)
