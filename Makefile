@@ -11,11 +11,8 @@ mkdirs:
 	mkdir -p ${DESTDIR}${HOME}/.config/sx
 	mkdir -p ${DESTDIR}${HOME}/.ncmpcpp
 
-mkcopy:
-	git clone -b desktop https://github.com/eudaldgr/dotfiles\
-		${DESTDIR}${HOME}/dotfiles
-
 mklink:
+	ln -sf ${HOME}/dotfiles/alsa/.asoundrc        ${DESTDIR}${HOME}/.asoundrc
 	ln -sf ${HOME}/dotfiles/bin                   ${DESTDIR}${HOME}/.local/bin
 	ln -sf ${HOME}/dotfiles/config/mpd/mpd.conf   ${DESTDIR}${HOME}/.config/mpd/mpd.conf
 	ln -sf ${HOME}/dotfiles/config/sx/sxrc        ${DESTDIR}${HOME}/.config/sx/sxrc
@@ -25,6 +22,6 @@ mklink:
 	ln -sf ${HOME}/dotfiles/rtorrent/.rtorrent.rc ${DESTDIR}${HOME}/.rtorrent.rc
 	ln -sf ${HOME}/dotfiles/vim/.vimrc            ${DESTDIR}${HOME}/.vimrc
 
-install: mkdirs mkcopy mklink
+install: mkdirs mklink
 
 .PHONY: install
