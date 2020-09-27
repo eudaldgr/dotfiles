@@ -6,6 +6,5 @@
 	program = gpg
 [credential]
 	helper = store
-
 [pull]
 	rebase = false

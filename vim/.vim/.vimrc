@@ -1,14 +1,18 @@
 set encoding=utf-8
 scriptencoding utf-8
 let g:is_bash = 1
+set directory=~/conf/vim,~/,/tmp
+set backupdir=~/conf/vim,~/,/tmp
+set viminfo+=n~/conf/vim/viminfo
+set runtimepath=~/conf/vim,~/conf/vim/after,$VIM,$VIMRUNTIME
 
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+if empty(glob('~/conf/vim/autoload/plug.vim'))
+  silent !curl -fLo ~/conf/vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/conf/vim/plugged')
 
 Plug 'morhetz/gruvbox'
 Plug 'itchyny/lightline.vim'
@@ -91,8 +95,8 @@ set cursorline
 set cursorcolumn
 set laststatus=2
 set undofile
-set undodir=~/.vim/undo/
-set backupdir=~/.vim/backup/
+set undodir=~/conf/vim/tmp/undo/
+set backupdir=~/conf/vim/tmp/backup/
 set noswapfile
 set backspace=indent,eol,start
 set shiftwidth=4
@@ -112,11 +116,6 @@ set foldlevel=99
 set foldminlines=99
 set foldlevelstart=99
 set listchars=tab:·\ ,trail:·,extends:»,precedes:«,nbsp:_
-
-" NERDTree things
-autocmd VimEnter * NERDTree
-autocmd VimEnter * wincmd p
-autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 if !isdirectory(expand(&backupdir))
     call mkdir(expand(&backupdir), 'p')

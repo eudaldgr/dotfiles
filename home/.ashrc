@@ -1,0 +1,44 @@
+#!/bin/sh
+
+export PATH=/usr/lib/ccache/bin:$HOME/bin:$HOME/conf/data/bin:$PATH:
+export LESSHISTFILE=-
+export HISTFILE=$HOME/conf/ash/history
+export XDG_CONFIG_HOME=$HOME/conf
+export XDG_DATA_HOME=$HOME/conf/data
+export XDG_CACHE_HOME=$HOME/conf/cache
+export CCACHE_DIR=$HOME/conf/ccache
+export GNUPGHOME=$HOME/conf/data/gnupg
+export MYVIMRC=$HOME/conf/vim/rc
+export CARGO_HOME=$HOME/conf/cargo
+
+export XDG_DESKTOP_DIR=$HOME
+export XDG_DOWNLOAD_DIR=$HOME/dl
+
+export PASH_DIR=$HOME/conf/data/pash
+export PASH_KEYID=hola@eudald.gr
+
+export CMAKE_GENERATOR=Ninja
+export CFLAGS="-march=native -mtune=native -pipe -O3 -fno-math-errno"
+export CXXFLAGS="$CFLAGS"
+export MAKEFLAGS="-j12"
+export LDFLAGS=""
+
+export EDITOR=nvim
+export VISUAL=$EDITOR
+export BROWSER=firefox
+export SHFM_OPENER=$HOME/bin/shfm-opener
+
+export KISS_SU=sls
+export KISS_COMPRESS=xz
+export KISS_HOOK=$HOME/bin/kiss-hook
+export KISS_PATH=$HOME/conf/repos/eudald-kiss
+KISS_PATH=$KISS_PATH:$HOME/conf/repos/repo/core
+KISS_PATH=$KISS_PATH:$HOME/conf/repos/repo/extra
+KISS_PATH=$KISS_PATH:$HOME/conf/repos/repo/xorg
+KISS_PATH=$KISS_PATH:$HOME/conf/repos/community/community
+
+$KISS_SU loadkmap < /usr/share/bkeymaps/es/es.bmap
+
+alias vim="nvim"
+alias mkdir="mkdir -p"
+alias sls="sls -p"
