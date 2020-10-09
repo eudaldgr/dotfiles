@@ -11,6 +11,9 @@ export GNUPGHOME=$HOME/conf/data/gnupg
 export MYVIMRC=$HOME/conf/vim/rc
 export CARGO_HOME=$HOME/conf/cargo
 
+export GEM_HOME=$HOME/conf/gem
+export GEM_PATH=$HOME/conf/gem/ruby/2.7.0
+
 export XDG_DESKTOP_DIR=$HOME
 export XDG_DOWNLOAD_DIR=$HOME/dl
 
@@ -18,7 +21,7 @@ export PASH_DIR=$HOME/conf/data/pash
 export PASH_KEYID=hola@eudald.gr
 
 export CMAKE_GENERATOR=Ninja
-export CFLAGS="-march=native -mtune=native -pipe -O3 -fno-math-errno"
+export CFLAGS="-march=native -pipe -O3 -fno-math-errno"
 export CXXFLAGS="$CFLAGS"
 export MAKEFLAGS="-j12"
 export LDFLAGS=""
@@ -31,7 +34,7 @@ export SHFM_OPENER=$HOME/bin/shfm-opener
 export KISS_SU=sls
 export KISS_COMPRESS=xz
 export KISS_HOOK=$HOME/bin/kiss-hook
-export KISS_PATH=$HOME/conf/repos/eudald-kiss
+export KISS_PATH=$HOME/projects/eudald-kiss
 KISS_PATH=$KISS_PATH:$HOME/conf/repos/repo/core
 KISS_PATH=$KISS_PATH:$HOME/conf/repos/repo/extra
 KISS_PATH=$KISS_PATH:$HOME/conf/repos/repo/xorg
