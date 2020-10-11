@@ -1,18 +1,18 @@
 set encoding=utf-8
 scriptencoding utf-8
 let g:is_bash = 1
-set directory=~/conf/vim,~/,/tmp
-set backupdir=~/conf/vim,~/,/tmp
-set viminfo+=n~/conf/vim/viminfo
-set runtimepath=~/conf/vim,~/conf/vim/after,$VIM,$VIMRUNTIME
+set directory=~/etc/vim,~/,/tmp
+set backupdir=~/etc/vim,~/,/tmp
+set viminfo+=n~/etc/vim/viminfo
+set runtimepath=~/etc/vim,~/etc/vim/after,$VIM,$VIMRUNTIME
 
-if empty(glob('~/conf/vim/autoload/plug.vim'))
-  silent !curl -fLo ~/conf/vim/autoload/plug.vim --create-dirs
+if empty(glob('~/etc/vim/autoload/plug.vim'))
+  silent !curl -fLo ~/etc/vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-call plug#begin('~/conf/vim/plugged')
+call plug#begin('~/etc/vim/plugged')
 
 Plug 'arcticicestudio/nord-vim'
 "Plug 'morhetz/gruvbox'
@@ -95,8 +95,8 @@ set cursorline
 set cursorcolumn
 set laststatus=2
 set undofile
-set undodir=~/conf/vim/tmp/undo/
-set backupdir=~/conf/vim/tmp/backup/
+set undodir=~/etc/vim/tmp/undo/
+set backupdir=~/etc/vim/tmp/backup/
 set noswapfile
 set backspace=indent,eol,start
 set shiftwidth=4
