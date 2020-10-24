@@ -1,21 +1,22 @@
 #!/bin/sh
 
-export PATH=/usr/lib/ccache/bin:$HOME/bin:$HOME/etc/data/bin:$PATH:
+export PATH=/usr/lib/ccache/bin:$HOME/usr/bin:$HOME/etc/data/bin:$PATH:
 export LESSHISTFILE=-
 export HISTFILE=$HOME/etc/ash/history
+
 export XDG_CONFIG_HOME=$HOME/etc
 export XDG_DATA_HOME=$HOME/etc/data
 export XDG_CACHE_HOME=$HOME/var/cache
+
 export CCACHE_DIR=$HOME/var/ccache
 export GNUPGHOME=$HOME/etc/data/gnupg
-export MYVIMRC=$HOME/etc/vim/rc
 export CARGO_HOME=$HOME/etc/cargo
+
+export MYVIMRC=$HOME/etc/vim/rc
+export VIMINIT='source $MYVIMRC'
 
 export GEM_HOME=$HOME/etc/gem
 export GEM_PATH=$HOME/etc/gem/ruby/2.7.0
-
-export XDG_DESKTOP_DIR=$HOME
-export XDG_DOWNLOAD_DIR=$HOME/tmp
 
 export PASH_DIR=$HOME/etc/data/pash
 export PASH_KEYID=hola@eudald.gr
@@ -34,15 +35,24 @@ export SHFM_OPENER=$HOME/bin/shfm-opener
 export KISS_SU=sls
 export KISS_COMPRESS=xz
 export KISS_HOOK=$HOME/bin/kiss-hook
-export KISS_PATH=$HOME/src/eudald-kiss
-KISS_PATH=$KISS_PATH:$HOME/var/repos/repo/core
-KISS_PATH=$KISS_PATH:$HOME/var/repos/repo/extra
-KISS_PATH=$KISS_PATH:$HOME/var/repos/repo/xorg
-KISS_PATH=$KISS_PATH:$HOME/var/repos/community/community
+export KISS_PATH=$HOME/usr/src/eudald-kiss
+KISS_PATH=$KISS_PATH:$HOME/var/kiss/repos/repo/core
+KISS_PATH=$KISS_PATH:$HOME/var/kiss/repos/repo/extra
+KISS_PATH=$KISS_PATH:$HOME/var/kiss/repos/repo/xorg
+KISS_PATH=$KISS_PATH:$HOME/var/kiss/repos/community/community
 
 $KISS_SU loadkmap < /usr/share/bkeymaps/es/es.bmap
 
 alias vim="nvim"
 alias mkdir="mkdir -p"
 alias sls="sls -p"
-alias rtorrent="rtorrent -n -o import=$XDG_CONFIG_HOME/rtorrent.rc"
+alias rtorrent="rtorrent -n -o import=$HOME/etc/rtorrent.rc"
+alias ssh="ssh -o IdentitiesOnly=yes -i $HOME/etc/ssh/id_rsa -F /dev/null -o UserKnownHostsFile=$HOME/etc/ssh/known_hosts"
+alias scp="scp -o IdentitiesOnly=yes -i $HOME/etc/ssh/id_rsa -F /dev/null -o UserKnownHostsFile=$HOME/etc/ssh/known_hosts"
+alias  ls="ls -h"
+alias   l="ls"
+alias  ll="ls -l"
+alias  la="ls -la"
+alias  lt="ls -ltr"
+alias  l.="ls -d .*"
+alias ll.="ls -ld .*"

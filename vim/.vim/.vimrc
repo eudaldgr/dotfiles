@@ -14,11 +14,10 @@ endif
 
 call plug#begin('~/etc/vim/plugged')
 
-Plug 'arcticicestudio/nord-vim'
-"Plug 'morhetz/gruvbox'
+Plug 'morhetz/gruvbox'
 Plug 'itchyny/lightline.vim'
   let g:lightline = {
-    \ 'colorscheme': 'nord',
+    \ 'colorscheme': 'gruvbox',
     \ 'active': {
     \   'left': [ [ 'mode', 'paste' ],
     \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
@@ -79,14 +78,15 @@ call plug#end()
 filetype plugin on
 syntax on
 
-colorscheme nord
+colorscheme gruvbox
 
 set nocompatible
 set modeline
 set hidden
 set showmatch
 set noshowmode
-set background=light
+set termguicolors
+set background=dark
 set synmaxcol=512
 set number
 set relativenumber
