@@ -36,10 +36,10 @@ export KISS_SU=sls
 export KISS_COMPRESS=xz
 export KISS_HOOK=$HOME/bin/kiss-hook
 export KISS_PATH=$HOME/usr/src/eudald-kiss
-KISS_PATH=$KISS_PATH:$HOME/var/kiss/repos/repo/core
-KISS_PATH=$KISS_PATH:$HOME/var/kiss/repos/repo/extra
-KISS_PATH=$KISS_PATH:$HOME/var/kiss/repos/repo/xorg
-KISS_PATH=$KISS_PATH:$HOME/var/kiss/repos/community/community
+KISS_PATH=$KISS_PATH:$HOME/var/db/kiss/repo/core
+KISS_PATH=$KISS_PATH:$HOME/var/db/kiss/repo/extra
+KISS_PATH=$KISS_PATH:$HOME/var/db/kiss/repo/xorg
+KISS_PATH=$KISS_PATH:$HOME/var/db/kiss/community/community
 
 $KISS_SU loadkmap < /usr/share/bkeymaps/es/es.bmap
 

@@ -54,8 +54,6 @@ Plug 'godlygeek/tabular'
 Plug 'tpope/vim-surround'
 Plug 'chun-yang/auto-pairs'
 Plug 'joom/vim-commentary'
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'chrisbra/colorizer'
@@ -69,9 +67,6 @@ Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'junegunn/limelight.vim', { 'on': 'Goyo' }
 Plug 'maxboisvert/vim-simple-complete'
 "Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'roxma/vim-tmux-clipboard'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'melonmanchan/vim-tmux-resizer'
 
 call plug#end()
 
